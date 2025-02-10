@@ -16,4 +16,5 @@ dependencies = [
 [dependency-groups]
 dev = [
     "ipython>=8.32.0",
+    "pandas>=2.2.3",
 ]

@@ -1,6 +1,5 @@
-import re
-
 import Stemmer
+import re
 import spacy
 
 tokenizer = spacy.blank("en")

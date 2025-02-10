@@ -21,10 +21,10 @@ def populate_model() -> None:
     WORD2VEC_MODEL = gensim.downloader.load(WORD2VEC_NAME)
 
 
-def predict_lyrics(lyrics: str) -> Prediction:
-    X = torch.tensor(np.array([get_sentence_embedding(lyrics)]))
-    preds = MODEL(X).detach().numpy()[0]
-    return Prediction(*[p.item() for p in preds])
+def predict_lyrics(lyrics: list[str]) -> list[Prediction]:
+    X = torch.tensor(np.array([get_sentence_embedding(l) for l in lyrics]))
+    preds = MODEL(X).detach().numpy()
+    return [Prediction(*[p.item() for p in pred]) for pred in preds]
 
 
 def get_sentence_embedding(sentence, vector_size=300):
