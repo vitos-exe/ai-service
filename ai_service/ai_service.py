@@ -22,7 +22,7 @@ def populate_model() -> None:
 
 
 def predict_lyrics(lyrics: str) -> Prediction:
-    X = torch.tensor([get_sentence_embedding(lyrics)])
+    X = torch.tensor(np.array([get_sentence_embedding(lyrics)]))
     preds = MODEL(X).detach().numpy()[0]
     return Prediction(*[p.item() for p in preds])
 
