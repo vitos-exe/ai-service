@@ -4,10 +4,10 @@ import torch
 
 from ai_service.model.prediction import Prediction
 from ai_service.model_definitions.dnn import SentimentDNN
-from ai_service.preprocessing_utils import tokenize, clean
+from ai_service.preprocessing_utils import clean, tokenize
 
-MODEL_PATH_TEMPLATE = 'models/{name}.pt'
-WORD2VEC_NAME = 'word2vec-google-news-300'
+MODEL_PATH_TEMPLATE = "models/{name}.pt"
+WORD2VEC_NAME = "word2vec-google-news-300"
 
 MODEL: SentimentDNN = None
 WORD2VEC_MODEL: gensim.models.KeyedVectors = None
@@ -17,7 +17,9 @@ def populate_model() -> None:
     global MODEL, WORD2VEC_MODEL
 
     MODEL = SentimentDNN()
-    MODEL.load_state_dict(torch.load(MODEL_PATH_TEMPLATE.format(name=MODEL.name), weights_only=True))
+    MODEL.load_state_dict(
+        torch.load(MODEL_PATH_TEMPLATE.format(name=MODEL.name), weights_only=True)
+    )
     WORD2VEC_MODEL = gensim.downloader.load(WORD2VEC_NAME)
 
 
