@@ -12,3 +12,7 @@ wheels/
 *.http
 models
 uv.lock
+
+# Custom
+lyrics.csv
+

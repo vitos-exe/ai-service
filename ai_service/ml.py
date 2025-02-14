@@ -3,8 +3,8 @@ import numpy as np
 import torch
 from gensim.models import KeyedVectors
 
-from ai_service.model.prediction import Prediction
-from ai_service.nn_definition.dnn import SentimentDNN
+from ai_service.model import Prediction
+from ai_service.nn_definition import SentimentDNN
 from ai_service.preprocessing_utils import clean, tokenize
 
 MODEL_PATH_TEMPLATE = "models/{name}.pt"
@@ -25,7 +25,7 @@ def create_model() -> None:
 
 
 def predict_lyrics(lyrics: list[str]) -> list[Prediction]:
-    X = torch.tensor(np.array([get_sentence_embedding(l) for l in lyrics]))
+    X = torch.tensor(np.array([get_sentence_embedding(l) for l in lyrics])).float()
     preds = MODEL(X).detach().numpy()
     return [Prediction(*[p.item() for p in pred]) for pred in preds]
 

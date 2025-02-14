@@ -3,10 +3,10 @@ from dataclasses import astuple
 
 from flask import current_app
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams
-from qdrant_client.models import PointStruct
+from qdrant_client.models import Distance, PointStruct, VectorParams
 
-from ai_service.model.lyrics import Lyrics
+from ai_service.lyrics_reader import read_lyrics_from_csv
+from ai_service.model import Lyrics
 
 QDRANT_CLIENT: QdrantClient = None
 COLLECTION_NAME: str = "lyrics"
@@ -25,7 +25,7 @@ def setup_qdrant() -> None:
     if COLLECTION_NAME not in collections:
         client.create_collection(
             collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=4, distance=Distance.COSINE)
+            vectors_config=VectorParams(size=4, distance=Distance.COSINE),
         )
 
 
@@ -44,4 +44,8 @@ def add_lyrics(lyrics: list[Lyrics]) -> None:
 
 
 def lyrics_to_point_struct(lyrics: Lyrics) -> PointStruct:
-    return PointStruct(id=str(uuid.uuid4()), vector=astuple(lyrics.prediction), payload=lyrics.dict_without_prediction)
+    return PointStruct(
+        id=str(uuid.uuid4()),
+        vector=astuple(lyrics.prediction),
+        payload=lyrics.dict_without_prediction,
+    )

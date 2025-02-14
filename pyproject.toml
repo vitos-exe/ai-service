@@ -12,11 +12,11 @@ dependencies = [
     "qdrant-client>=1.12.1",
     "spacy>=3.8.4",
     "torch<2.3.0",
+    "pandas>=2.2.3",
 ]
 
 [dependency-groups]
 dev = [
     "ipython>=8.32.0",
-    "pandas>=2.2.3",
     "pytest>=8.3.4",
 ]

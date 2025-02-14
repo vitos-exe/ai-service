@@ -2,7 +2,7 @@ from dataclasses import asdict
 
 from flask import Blueprint, request
 
-from ai_service.ai_service import predict_lyrics
+from ai_service.ml import predict_lyrics
 
 prediction_blueprint = Blueprint("prediction", __name__, url_prefix="/prediction")
 
