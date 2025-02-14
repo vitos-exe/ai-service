@@ -1,7 +1,7 @@
 import re
 
-import spacy
 import Stemmer
+import spacy
 
 tokenizer = spacy.blank("en")
 stemmer = Stemmer.Stemmer("english")

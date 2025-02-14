@@ -6,7 +6,7 @@ class SentimentDNN(nn.Module):
     name = "sentiment-dnn"
 
     def __init__(
-        self, input_size=300, hidden_sizes=(64, 32), dropout_rates=(0, 0), output_size=4
+            self, input_size=300, hidden_sizes=(64, 32), dropout_rates=(0, 0), output_size=4
     ):
         super(SentimentDNN, self).__init__()
 

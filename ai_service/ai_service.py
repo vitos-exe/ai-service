@@ -1,19 +1,20 @@
 import gensim.downloader
 import numpy as np
 import torch
+from gensim.models import KeyedVectors
 
 from ai_service.model.prediction import Prediction
-from ai_service.model_definitions.dnn import SentimentDNN
+from ai_service.nn_definition.dnn import SentimentDNN
 from ai_service.preprocessing_utils import clean, tokenize
 
 MODEL_PATH_TEMPLATE = "models/{name}.pt"
 WORD2VEC_NAME = "word2vec-google-news-300"
 
 MODEL: SentimentDNN = None
-WORD2VEC_MODEL: gensim.models.KeyedVectors = None
+WORD2VEC_MODEL: KeyedVectors = None
 
 
-def populate_model() -> None:
+def create_model() -> None:
     global MODEL, WORD2VEC_MODEL
 
     MODEL = SentimentDNN()
@@ -29,7 +30,7 @@ def predict_lyrics(lyrics: list[str]) -> list[Prediction]:
     return [Prediction(*[p.item() for p in pred]) for pred in preds]
 
 
-def get_sentence_embedding(sentence, vector_size=300):
+def get_sentence_embedding(sentence: str, vector_size: int = 300) -> np.ndarray:
     tokens = tokenize(clean(sentence))
     vectors = [WORD2VEC_MODEL[word] for word in tokens if word in WORD2VEC_MODEL]
     if len(vectors) == 0:
