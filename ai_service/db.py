@@ -5,7 +5,6 @@ from flask import current_app
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 
-from ai_service.lyrics_reader import read_lyrics_from_csv
 from ai_service.model import Lyrics
 
 QDRANT_CLIENT: QdrantClient = None

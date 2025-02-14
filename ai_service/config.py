@@ -1,6 +1,5 @@
 class Config:
     QDRANT_URL: str
-    SETUP_QDRANT: bool = False
     LYRICS_PATH: str
 
 
@@ -11,4 +10,3 @@ class DevConfig(Config):
 
 class TestConfig(Config):
     QDRANT_URL = ":memory:"
-    SETUP_QDRANT: bool = True
