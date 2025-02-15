@@ -6,7 +6,7 @@ class TestDB(TestBase):
     def test_add_lyrics(self, app):
         client = get_qdrant_client()
         add_lyrics([TestBase.TEST_LYRICS])
-        records = client.scroll(
+        records = client.count(
             collection_name=COLLECTION_NAME,
         )[0]
         assert len(records) == 1

@@ -14,8 +14,9 @@ COLLECTION_NAME: str = "lyrics"
 def create_qdrant_client() -> None:
     global QDRANT_CLIENT
 
-    location = current_app.config.get("QDRANT_URL", None)
+    location = current_app.config.get("QDRANT_URL")
     QDRANT_CLIENT = QdrantClient(location)
+    setup_qdrant()
 
 
 def setup_qdrant() -> None:

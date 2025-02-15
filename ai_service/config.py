@@ -10,3 +10,4 @@ class DevConfig(Config):
 
 class TestConfig(Config):
     QDRANT_URL = ":memory:"
+    LYRICS_PATH = "lyrics.csv"
