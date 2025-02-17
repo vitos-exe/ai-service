@@ -2,13 +2,23 @@ import pytest
 
 from ai_service import create_app
 from ai_service.config import TestConfig
-from ai_service.model import Lyrics, Prediction
+from ai_service.lyrics_reader import read_lyrics_from_csv
+from ai_service.model import Lyrics, Prediction, RawLyrics
+from random import random
 
 
 class TestBase:
-    TEST_LYRICS = Lyrics("artist", "title", Prediction(0.1, 0.25, 0.3, 0.15))
+    TEST_PREDICTION = Prediction(random(), random(), random(), random())
+    TEST_LYRICS = Lyrics("artist", "title", TEST_PREDICTION)
+    TEST_RAW_LYRICS = RawLyrics("artist", "title", "lyrics")
 
-    @pytest.fixture
+    @pytest.fixture(scope="session")
     def app(self):
         app = create_app(TestConfig)
-        yield app
+        return app
+
+    @pytest.fixture
+    def raw_lyrics(self, app):
+        with app.app_context():
+            raw_lyrics = read_lyrics_from_csv()
+            return raw_lyrics

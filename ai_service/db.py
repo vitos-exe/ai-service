@@ -25,7 +25,7 @@ def setup_qdrant() -> None:
     if COLLECTION_NAME not in collections:
         client.create_collection(
             collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=4, distance=Distance.COSINE),
+            vectors_config=VectorParams(size=4, distance=Distance.EUCLID),
         )
 
 

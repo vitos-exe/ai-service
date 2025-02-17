@@ -25,7 +25,8 @@ def create_model() -> None:
 
 
 def predict_lyrics(lyrics: list[str]) -> list[Prediction]:
-    X = torch.tensor(np.array([get_sentence_embedding(l) for l in lyrics])).float()
+    embeddings = np.array([get_sentence_embedding(l) for l in lyrics])
+    X = torch.from_numpy(embeddings).float()
     preds = MODEL(X).detach().numpy()
     return [Prediction(*[p.item() for p in pred]) for pred in preds]
 

@@ -10,9 +10,6 @@ wheels/
 .venv
 .idea
 *.http
-models
 uv.lock
 
 # Custom
-lyrics.csv
-
