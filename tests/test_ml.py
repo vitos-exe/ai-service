@@ -2,7 +2,7 @@ from dataclasses import astuple
 
 from testfixtures import compare
 
-from ai_service import lyrics_reader, ml, model
+from ai_service import ml
 from tests.base import TestBase
 
 

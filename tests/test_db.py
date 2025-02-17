@@ -7,20 +7,19 @@ from ai_service.db import (COLLECTION_NAME, add_lyrics, get_qdrant_client,
                            search_n_closest)
 from ai_service.model import Lyrics, Prediction
 from tests.base import TestBase
+from tests.db_base import TestDBBase
 
 
-class TestDB(TestBase):
+class TestDB(TestDBBase):
     @staticmethod
     def round_to_five(f):
         return round(f, 5)
 
-    @pytest.fixture
-    def client(self, app):
-        return get_qdrant_client()
-
-    def test_add_lyrics(self, client):
+    def test_add_lyrics(self, db_client):
         add_lyrics([TestBase.TEST_LYRICS])
-        records = client.scroll(collection_name=COLLECTION_NAME, with_vectors=True)[0]
+        records = db_client.scroll(collection_name=COLLECTION_NAME, with_vectors=True)[
+            0
+        ]
         assert len(records) == 1
         assert records[0].payload["artist"] == TestBase.TEST_LYRICS.artist
         vector = records[0].vector
@@ -30,7 +29,7 @@ class TestDB(TestBase):
             map(TestDB.round_to_five, test_lyrics_vector),
         )
 
-    def test_n_closest(self, client):
+    def test_n_closest(self, db_client):
         preds = [
             [0.7, 0.1, 0.15, 0.05],
             [0.1, 0.6, 0.1, 0.2],

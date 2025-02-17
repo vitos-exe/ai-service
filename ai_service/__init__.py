@@ -1,9 +1,9 @@
 import secrets
-
-from flask import Flask, jsonify, request
 from dataclasses import asdict
 
-from ai_service import config, db, lyrics_reader, ml, model, prediction
+from flask import Flask, jsonify, request
+
+from ai_service import config, db, lyrics_reader, ml, model
 
 
 def create_app(app_config=None):
@@ -27,21 +27,27 @@ def create_app(app_config=None):
 
     @app.post("/")
     def get_prediction():
-        save = request.args.get('save')
+        save = request.args.get("save")
         raw_lyrics = model.RawLyrics(**request.get_json())
         prediction = ml.predict_lyrics([raw_lyrics])[0]
         if save:
-            db.add_lyrics([model.combine_raw_lyrics_and_prediction(raw_lyrics, prediction)])
+            db.add_lyrics(
+                [model.combine_raw_lyrics_and_prediction(raw_lyrics, prediction)]
+            )
         return asdict(prediction), 200
-
 
     @app.post("/batch")
     def get_predictions():
-        save = request.args.get('save')
+        save = request.args.get("save")
         lyrics = [model.RawLyrics(**obj) for obj in request.get_json()]
         preds = ml.predict_lyrics(lyrics)
         if save:
-            db.add_lyrics([model.combine_raw_lyrics_and_prediction(l, p) for l, p in zip(lyrics, preds)])
+            db.add_lyrics(
+                [
+                    model.combine_raw_lyrics_and_prediction(l, p)
+                    for l, p in zip(lyrics, preds)
+                ]
+            )
         return [asdict(p) for p in preds], 200
 
     @app.post("/closest")
