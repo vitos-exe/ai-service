@@ -14,6 +14,7 @@ def get_raw_lyrics_from_row(row):
     data = row[1]
     return RawLyrics(data["artist"], data["title"], data["lyrics"])
 
+
 def lyrics_by_artist(artist: str) -> str:
     lyrics = read_lyrics_from_csv()
-    return next(filter(lambda l: l.artist == artist , lyrics))
+    return next(filter(lambda l: l.artist == artist, lyrics))

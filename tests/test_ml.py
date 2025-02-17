@@ -1,7 +1,9 @@
+from dataclasses import astuple
+
+from testfixtures import compare
+
 from ai_service import lyrics_reader, ml, model
 from tests.base import TestBase
-from dataclasses import astuple
-from testfixtures import compare
 
 
 class TestML(TestBase):

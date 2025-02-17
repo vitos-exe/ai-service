@@ -3,12 +3,26 @@ from dataclasses import astuple
 
 from flask import current_app
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, PointStruct, VectorParams
+from qdrant_client.models import (Distance, PointStruct, ScoredPoint,
+                                  VectorParams)
 
-from ai_service.model import Lyrics
+from ai_service.model import Lyrics, Prediction
 
 QDRANT_CLIENT: QdrantClient = None
 COLLECTION_NAME: str = "lyrics"
+
+
+def lyrics_to_point_struct(lyrics: Lyrics) -> PointStruct:
+    return PointStruct(
+        id=str(uuid.uuid4()),
+        vector=astuple(lyrics.prediction),
+        payload=lyrics.dict_without_prediction,
+    )
+
+
+def score_point_to_lyrics(point: ScoredPoint) -> Lyrics:
+    pred = Prediction(*point.vector)
+    return Lyrics(prediction=pred, **point.payload)
 
 
 def create_qdrant_client() -> None:
@@ -25,7 +39,7 @@ def setup_qdrant() -> None:
     if COLLECTION_NAME not in collections:
         client.create_collection(
             collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=4, distance=Distance.EUCLID),
+            vectors_config=VectorParams(size=4, distance=Distance.DOT),
         )
 
 
@@ -43,9 +57,9 @@ def add_lyrics(lyrics: list[Lyrics]) -> None:
     )
 
 
-def lyrics_to_point_struct(lyrics: Lyrics) -> PointStruct:
-    return PointStruct(
-        id=str(uuid.uuid4()),
-        vector=astuple(lyrics.prediction),
-        payload=lyrics.dict_without_prediction,
-    )
+def search_n_closest(pred: Prediction, n: int = 10) -> list[Lyrics]:
+    client = get_qdrant_client()
+    points = client.query_points(
+        COLLECTION_NAME, list(astuple(pred)), limit=n, with_vectors=True
+    ).points
+    return [score_point_to_lyrics(p) for p in points]

@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from gensim.models import KeyedVectors
 
-from ai_service.model import Prediction
+from ai_service.model import Prediction, RawLyrics
 from ai_service.nn_definition import SentimentDNN
 from ai_service.preprocessing_utils import clean, tokenize
 
@@ -24,8 +24,8 @@ def create_model() -> None:
     WORD2VEC_MODEL = gensim.downloader.load(WORD2VEC_NAME)
 
 
-def predict_lyrics(lyrics: list[str]) -> list[Prediction]:
-    embeddings = np.array([get_sentence_embedding(l) for l in lyrics])
+def predict_lyrics(lyrics: list[RawLyrics]) -> list[Prediction]:
+    embeddings = np.array([get_sentence_embedding(l.lyrics) for l in lyrics])
     X = torch.from_numpy(embeddings).float()
     preds = MODEL(X).detach().numpy()
     return [Prediction(*[p.item() for p in pred]) for pred in preds]

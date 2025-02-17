@@ -1,6 +1,8 @@
-from tests.base import TestBase
-from ai_service.db import get_qdrant_client, COLLECTION_NAME
 import pytest
+
+from ai_service.db import COLLECTION_NAME, get_qdrant_client
+from tests.base import TestBase
+
 
 class TestCLI(TestBase):
     @pytest.fixture(scope="class")
@@ -8,7 +10,7 @@ class TestCLI(TestBase):
         return app.test_cli_runner()
 
     def test_populate_db(self, runner):
-        runner.invoke(args='populate_db')
+        runner.invoke(args="populate_db")
         client = get_qdrant_client()
         count = client.count(
             collection_name=COLLECTION_NAME,
@@ -22,4 +24,3 @@ class TestCLI(TestBase):
         for record in search_result:
             assert abs(1 - sum(record.vector)) < 1e-5
             assert len(record.payload) > 0
-
