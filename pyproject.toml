@@ -1,24 +1,28 @@
 [project]
 name = "ai-service"
-version = "0.1.0"
+version = "1.0.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = "==3.9.6"
 dependencies = [
-    "flask>=3.1.0",
-    "gensim>=4.3.3",
+    "flask",
+    "gensim",
     "numpy==1.26.4",
-    "pystemmer>=2.2.0.3",
-    "qdrant-client>=1.12.1",
-    "spacy>=3.8.4",
-    "torch[cpu]<2.3.0",
-    "pandas>=2.2.3",
+    "pystemmer",
+    "qdrant-client",
+    "spacy",
+    "pandas",
+    "torch==2.2.2",
 ]
 
 [dependency-groups]
 dev = [
-    "ipdb>=0.13.13",
-    "ipython>=8.32.0",
-    "pytest>=8.3.4",
-    "testfixtures>=8.3.0",
+    "ipdb",
+    "ipython",
+    "pytest",
+    "seaborn",
+    "testfixtures",
+    "jupyterlab",
+    "scikit-learn",
 ]
+

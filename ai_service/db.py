@@ -3,8 +3,7 @@ from dataclasses import astuple
 
 from flask import current_app
 from qdrant_client import QdrantClient
-from qdrant_client.models import (Distance, PointStruct, ScoredPoint,
-                                  VectorParams)
+from qdrant_client.models import Distance, PointStruct, ScoredPoint, VectorParams
 
 from ai_service.model import Lyrics, Prediction
 

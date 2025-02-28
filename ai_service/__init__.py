@@ -6,10 +6,10 @@ from flask import Flask, jsonify, request
 from ai_service import config, db, lyrics_reader, ml, model
 
 
-def create_app(app_config=None):
+def create_app(app_config="ai_service.config.DevConfig"):
     app = Flask(__name__)
     app.secret_key = secrets.token_hex()
-    app.config.from_object(app_config if app_config else config.DevConfig)
+    app.config.from_object(app_config)
 
     @app.cli.command("populate_db")
     def populate_db():
