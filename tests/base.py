@@ -4,7 +4,7 @@ import pytest
 
 from ai_service import create_app
 from ai_service.config import TestConfig
-from ai_service.lyrics_reader import read_lyrics_from_csv
+from ai_service.lyrics_reader import read_lyrics
 from ai_service.model import Lyrics, Prediction, RawLyrics
 
 
@@ -21,5 +21,5 @@ class TestBase:
     @pytest.fixture
     def raw_lyrics(self, app):
         with app.app_context():
-            raw_lyrics = read_lyrics_from_csv()
+            raw_lyrics = read_lyrics()
             return raw_lyrics

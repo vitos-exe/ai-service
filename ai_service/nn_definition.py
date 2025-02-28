@@ -2,13 +2,13 @@ from torch import nn
 from torch.nn.functional import softmax
 
 
-class SentimentDNN(nn.Module):
+class SentimentDNNCore(nn.Module):
     name = "sentiment-dnn"
 
     def __init__(
         self, input_size=300, hidden_sizes=(64, 32), dropout_rates=(0, 0), output_size=4
     ):
-        super(SentimentDNN, self).__init__()
+        super(SentimentDNNCore, self).__init__()
 
         layers = []
         for i, hidden_size in enumerate(hidden_sizes):

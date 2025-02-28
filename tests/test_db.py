@@ -1,14 +1,8 @@
 from dataclasses import astuple
 
-import pytest
 from testfixtures import compare
 
-from ai_service.db import (
-    COLLECTION_NAME,
-    add_lyrics,
-    get_qdrant_client,
-    search_n_closest,
-)
+from ai_service.db import COLLECTION_NAME, add_lyrics, search_n_closest
 from ai_service.model import Lyrics, Prediction
 from tests.base import TestBase
 from tests.db_base import TestDBBase

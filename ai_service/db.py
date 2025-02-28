@@ -3,7 +3,8 @@ from dataclasses import astuple
 
 from flask import current_app
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, PointStruct, ScoredPoint, VectorParams
+from qdrant_client.models import (Distance, PointStruct, ScoredPoint,
+                                  VectorParams)
 
 from ai_service.model import Lyrics, Prediction
 
@@ -52,7 +53,7 @@ def add_lyrics(lyrics: list[Lyrics]) -> None:
     client = get_qdrant_client()
     client.upsert(
         collection_name=COLLECTION_NAME,
-        points=[lyrics_to_point_struct(l) for l in lyrics],
+        points=[lyrics_to_point_struct(lyr) for lyr in lyrics],
     )
 
 

@@ -4,7 +4,6 @@ import pytest
 
 from ai_service.db import COLLECTION_NAME
 from ai_service.model import Prediction, RawLyrics
-from tests.base import TestBase
 from tests.db_base import TestDBBase
 
 
