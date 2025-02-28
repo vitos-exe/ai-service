@@ -1,4 +1,5 @@
 from dataclasses import asdict, dataclass
+from typing import Literal
 
 
 @dataclass(frozen=True)
@@ -33,3 +34,6 @@ def combine_raw_lyrics_and_prediction(
     return Lyrics(
         artist=raw_lyrics.artist, title=raw_lyrics.title, prediction=prediction
     )
+
+
+LyricsDataFormat = Literal["csv", "structured-folders"]

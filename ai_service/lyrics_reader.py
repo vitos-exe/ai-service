@@ -1,10 +1,9 @@
 import os
-from typing import Literal
 
 import pandas as pd
 from flask import current_app
 
-from ai_service.model import RawLyrics
+from ai_service.model import LyricsDataFormat, RawLyrics
 
 
 def load_lyrics_to_df(root_folder) -> pd.DataFrame:
@@ -30,10 +29,10 @@ def load_lyrics_to_df(root_folder) -> pd.DataFrame:
     return pd.DataFrame(data)
 
 
-def read_lyrics(data_type: Literal["csv", "folder-structure"] = "csv") -> list[RawLyrics]:
+def read_lyrics(data_format: LyricsDataFormat) -> list[RawLyrics]:
     path_config_key, extract_fn = (
         ("LYRICS_CSV_PATH", pd.read_csv)
-        if data_type == "csv"
+        if data_format == "csv"
         else ("LYRICS_FOLDER_STRUCTURE_PATH", load_lyrics_to_df)
     )
     df = extract_fn(current_app.config[path_config_key])

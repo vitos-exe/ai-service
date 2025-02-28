@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.9'  # specify the python version you need
+        python-version: '3.9'
 
     - name: Install the latest version of uv
       uses: astral-sh/setup-uv@v5
@@ -27,10 +27,6 @@ jobs:
     - name: Install dependencies using uv
       run: |
         uv sync
-
-    - name: Activate virtual environment
-      run: |
-        source .venv/bin/activate
 
     - name: Run tests with pytest
       run: |

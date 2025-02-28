@@ -40,17 +40,17 @@ class SentimentDNN(SentimentModel):
 
         # If we are not testing, we should load word2vec immediately
         if not current_app.testing:
-            self._word2vec()
+            self.__dict__['word2vec'] = self.word2vec
 
     @cached_property
-    def _word2vec(self):
+    def word2vec(self):
         return gensim.downloader.load(SentimentDNN.WORD2VEC_NAME)
 
     def get_sentence_embedding(
         self, sentence: str, vector_size: int = 300
     ) -> np.ndarray:
         tokens = tokenize(clean(sentence))
-        vectors = [self._word2vec[word] for word in tokens if word in self._word2vec]
+        vectors = [self.word2vec[word] for word in tokens if word in self.word2vec]
         if len(vectors) == 0:
             return np.zeros(vector_size)
         return np.mean(vectors, axis=0)

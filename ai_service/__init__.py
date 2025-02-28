@@ -13,7 +13,7 @@ def create_app(app_config="ai_service.config.DevConfig"):
 
     @app.cli.command("populate_db")
     def populate_db():
-        raw_lyrics = lyrics_reader.read_lyrics()
+        raw_lyrics = lyrics_reader.read_lyrics(app.config["LYRICS_DATA_FORMAT"])
         predictions = ml.SENTIMENT_MODEL.predict_lyrics(raw_lyrics)
         lyrics = [
             model.combine_raw_lyrics_and_prediction(rl, p)

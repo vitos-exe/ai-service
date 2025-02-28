@@ -1,5 +1,9 @@
+from ai_service.model import LyricsDataFormat
+
+
 class Config:
     QDRANT_URL: str
+    LYRICS_DATA_FORMAT: LyricsDataFormat = "structured-folders"
     LYRICS_CSV_PATH: str
     LYRICS_FOLDER_STRUCTURE_PATH: str
 
@@ -12,8 +16,8 @@ class DevConfig(Config):
 
 class TestConfig(Config):
     QDRANT_URL = ":memory:"
-    LYRICS_CSV_PATH = "lyrics_test.csv"
-    LYRICS_FOLDER_STRUCTURE_PATH = "lyrics"
+    LYRICS_CSV_PATH = "tests/data/lyrics_test.csv"
+    LYRICS_FOLDER_STRUCTURE_PATH = "tests/data/lyrics_test"
     TESTING = True
 
 

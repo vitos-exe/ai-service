@@ -21,5 +21,5 @@ class TestBase:
     @pytest.fixture
     def raw_lyrics(self, app):
         with app.app_context():
-            raw_lyrics = read_lyrics()
+            raw_lyrics = read_lyrics(app.config["LYRICS_DATA_FORMAT"])
             return raw_lyrics
